@@ -101,24 +101,51 @@
         <div class="chronicle-head">
             <div class="chronicle-title">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 2h8M1 5h6M1 8h7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-            Narrative Chronicle
+            Story Timeline Matrix
             </div>
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <div class="filters" id="filters">
-                <button class="filter-pill active" data-tag="all">ALL</button>
-                <button class="filter-pill" data-tag="lifepath">Lifepath</button>
-                <button class="filter-pill" data-tag="romance">Romances</button>
-                <button class="filter-pill" data-tag="death">Deaths</button>
-                <button class="filter-pill" data-tag="choice">Choices</button>
-                <button class="filter-pill" data-tag="ep1">Phantom Liberty</button>
-                <button class="filter-pill" data-tag="side">Side Quests</button>
-            </div>
-            <span class="fact-count" id="fact-count"></span>
+            <div class="view-tabs">
+                <button class="view-tab active" data-view="flowchart">Flowchart</button>
+                <button class="view-tab" data-view="list">Chronicle</button>
             </div>
         </div>
-        <ul class="fact-list" id="ui-story-facts">
-            <li class="empty-state">AWAITING SAVE FILE</li>
-        </ul>
+        <!-- VIEW 1: DBH FLOWCHART -->
+        <div id="view-flowchart" class="dbh-timeline-wrapper">
+            <div class="dbh-header">
+                <div class="dbh-completion" id="dbh-completion">0% NARRATIVE COMPLETE</div>
+                <div class="dbh-header-title">MAIN STORYLINE</div>
+                <div class="dbh-stats-bar">
+                    <div class="dbh-stat-block">ACTS <span>03</span></div>
+                    <div class="dbh-stat-block">CRITICAL PATH <span id="dbh-path-count">0</span></div>
+                    <div class="dbh-stat-block">ENDINGS <span id="dbh-ending-count">0</span></div>
+                </div>
+            </div>
+            
+            <div id="dbh-canvas" class="dbh-canvas">
+                <!-- Dynamically injected -->
+                <div class="empty-state">AWAITING SAVE DATA...</div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: ORIGINAL LIST -->
+        <div id="view-list" style="display:none">
+            <div class="chronicle-head" style="border-top:none; background: rgba(255,255,255,0.01)">
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <div class="filters" id="filters">
+                    <button class="filter-pill active" data-tag="all">ALL</button>
+                    <button class="filter-pill" data-tag="lifepath">Lifepath</button>
+                    <button class="filter-pill" data-tag="romance">Romances</button>
+                    <button class="filter-pill" data-tag="death">Deaths</button>
+                    <button class="filter-pill" data-tag="choice">Choices</button>
+                    <button class="filter-pill" data-tag="ep1">Phantom Liberty</button>
+                    <button class="filter-pill" data-tag="side">Side Quests</button>
+                </div>
+                <span class="fact-count" id="fact-count"></span>
+                </div>
+            </div>
+            <ul class="fact-list" id="ui-story-facts">
+                <li class="empty-state">AWAITING SAVE FILE</li>
+            </ul>
+        </div>
     </div>
 
   </div><!-- /dashboard -->
