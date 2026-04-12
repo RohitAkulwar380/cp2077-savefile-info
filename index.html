@@ -12,7 +12,7 @@
   <!-- HEADER -->
   <div class="header">
     <div>
-      <div class="logo-eyebrow">// SAVE FILE ANALYZER v2.0</div>
+      <div class="logo-eyebrow">// SAVE FILE ANALYZER v2.1</div>
       <div class="logo-title">NIGHT CITY<br>CHRONICLE</div>
       <div class="logo-sub">CYBERPUNK 2077 · NARRATIVE STATE EXTRACTOR</div>
     </div>
@@ -35,9 +35,8 @@
   <div id="dashboard">
     <div class="dash-grid">
 
-      <!-- LEFT: portrait + stats -->
+      <!-- LEFT: portrait -->
       <div class="left-col">
-
         <div class="card">
           <div class="portrait-wrap" id="portrait-wrap">
             <div class="portrait-placeholder" id="portrait-placeholder">
@@ -49,57 +48,77 @@
             </div>
             <img id="portrait-img" src="" alt="V" class="portrait-img">
           </div>
-          <div id="ending-badge" class="ending-badge"></div>
         </div>
+      </div><!-- /left-col -->
 
+      <!-- RIGHT: Profile + Quests -->
+      <div class="right-col">
         <div class="card">
           <div class="card-head">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="1" y="1" width="8" height="8" stroke="currentColor" stroke-width="1"/><rect x="3" y="3" width="4" height="4" fill="currentColor" opacity=".4"/></svg>
             V's Profile
           </div>
           <div class="card-body">
-            <div class="stat-row"><span class="stat-label">LIFEPATH</span>    <span class="stat-val" id="ui-lifepath">—</span></div>
-            <div class="stat-row"><span class="stat-label">PLAYTIME</span>    <span class="stat-val" id="ui-playtime">—</span></div>
-            <div class="stat-row"><span class="stat-label">LEVEL</span>       <span class="stat-val" id="ui-level">—</span></div>
-            <div class="stat-row"><span class="stat-label">STREET CRED</span><span class="stat-val" id="ui-streetcred">—</span></div>
-            <div class="stat-row"><span class="stat-label">DIFFICULTY</span> <span class="stat-val" id="ui-difficulty">—</span></div>
-            <div class="stat-row"><span class="stat-label">PATCH</span>       <span class="stat-val" id="ui-patch">—</span></div>
-          </div>
-          <div class="quest-strip">
-            <div class="qblock"><span class="qn" id="qn-main">—</span><span class="ql">MAIN</span></div>
-            <div class="qblock"><span class="qn" id="qn-side">—</span><span class="ql">SIDE</span></div>
-            <div class="qblock"><span class="qn" id="qn-gig">—</span><span class="ql">GIGS</span></div>
-            <div class="qblock"><span class="qn" id="qn-ncpd">—</span><span class="ql">NCPD</span></div>
+            <div class="profile-stats-grid">
+                <div class="stat-row"><span class="stat-label">LIFEPATH</span>    <span class="stat-val" id="ui-lifepath">—</span></div>
+                <div class="stat-row"><span class="stat-label">PLAYTIME</span>    <span class="stat-val" id="ui-playtime">—</span></div>
+                <div class="stat-row"><span class="stat-label">LEVEL</span>       <span class="stat-val" id="ui-level">—</span></div>
+                <div class="stat-row"><span class="stat-label">STREET CRED</span><span class="stat-val" id="ui-streetcred">—</span></div>
+                <div class="stat-row"><span class="stat-label">DIFFICULTY</span> <span class="stat-val" id="ui-difficulty">—</span></div>
+                <div class="stat-row"><span class="stat-label">PATCH</span>       <span class="stat-val" id="ui-patch">—</span></div>
+            </div>
+
+            <!-- ENDING SECTION (Dynamic stack of cards) -->
+            <div id="ending-badge" class="ending-badge"></div>
+
+            <!-- QUEST STATS CARDS (2x2 Grid) -->
+            <div class="quest-stats-grid">
+                <div class="quest-mini-card">
+                    <span class="ql">MAIN QUEST</span>
+                    <span class="qn" id="qn-main">—</span>
+                </div>
+                <div class="quest-mini-card">
+                    <span class="ql">SIDE QUESTS</span>
+                    <span class="qn" id="qn-side">—</span>
+                </div>
+                <div class="quest-mini-card">
+                    <span class="ql">GIGS</span>
+                    <span class="qn" id="qn-gig">—</span>
+                </div>
+                <div class="quest-mini-card">
+                    <span class="ql">NCPD SCANNER</span>
+                    <span class="qn" id="qn-ncpd">—</span>
+                </div>
+            </div>
           </div>
         </div>
+      </div><!-- /right-col -->
 
-      </div><!-- /left-col -->
+    </div><!-- /dash-grid -->
 
-      <!-- RIGHT: narrative chronicle -->
-      <div class="card">
+    <!-- FULL WIDTH BOTTOM: narrative chronicle -->
+    <div class="card chronicle-card">
         <div class="chronicle-head">
-          <div class="chronicle-title">
+            <div class="chronicle-title">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 2h8M1 5h6M1 8h7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
             Narrative Chronicle
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
             <div class="filters" id="filters">
-              <button class="filter-pill active" data-tag="all">ALL</button>
-              <button class="filter-pill" data-tag="lifepath">Lifepath</button>
-              <button class="filter-pill" data-tag="romance">Romances</button>
-              <button class="filter-pill" data-tag="death">Deaths</button>
-              <button class="filter-pill" data-tag="choice">Choices</button>
-              <button class="filter-pill" data-tag="ep1">Phantom Liberty</button>
-              <button class="filter-pill" data-tag="side">Side Quests</button>
+                <button class="filter-pill active" data-tag="all">ALL</button>
+                <button class="filter-pill" data-tag="lifepath">Lifepath</button>
+                <button class="filter-pill" data-tag="romance">Romances</button>
+                <button class="filter-pill" data-tag="death">Deaths</button>
+                <button class="filter-pill" data-tag="choice">Choices</button>
+                <button class="filter-pill" data-tag="ep1">Phantom Liberty</button>
+                <button class="filter-pill" data-tag="side">Side Quests</button>
             </div>
             <span class="fact-count" id="fact-count"></span>
-          </div>
+            </div>
         </div>
         <ul class="fact-list" id="ui-story-facts">
-          <li class="empty-state">AWAITING SAVE FILE</li>
+            <li class="empty-state">AWAITING SAVE FILE</li>
         </ul>
-      </div>
-
     </div>
 
   </div><!-- /dashboard -->

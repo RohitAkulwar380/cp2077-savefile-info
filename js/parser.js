@@ -88,21 +88,27 @@ const FACT_DB = [
 // ENDING DETECTION
 // ─────────────────────────────────────────────────────────────────────────────
 function detectEnding(facts, finSet) {
+  const detected = [];
+
+  // DLC Endings (Phantom Liberty)
   if (finSet.has('q307_tomorrow') || finSet.has('q307'))
-    return { label:'THE TOWER — SONGBIRD FREE', color:'#A78BFA' };
-  if (facts['q305_finished'] || facts['q305_fact_songbird_dead'])
-    return { label:'REED ENDING — SONGBIRD DEAD', color:'#FF6B35' };
-  if (facts['q306_done'])
-    return { label:'SONGBIRD PATH', color:'#A78BFA' };
+      detected.push({ label:'THE TOWER — SONGBIRD FREE', color:'#A78BFA' });
+  else if (facts['q305_finished'] || facts['q305_fact_songbird_dead'])
+      detected.push({ label:'REED ENDING — SONGBIRD DEAD', color:'#FF6B35' });
+  else if (facts['q306_done'])
+      detected.push({ label:'SONGBIRD PATH — MISSION COMPLETE', color:'#A78BFA' });
+
+  // Main Game Endings
   if (finSet.has('q201_heir') || finSet.has('q201'))
-    return { label:'THE DEVIL — ARASAKA', color:'#FF2D55' };
+      detected.push({ label:'THE DEVIL — ARASAKA CONTRACT', color:'#FF2D55' });
   if (finSet.has('q203_legend') || finSet.has('q203'))
-    return { label:'THE SUN — LEGEND OF NIGHT CITY', color:'#F5E642' };
+      detected.push({ label:'THE SUN — LEGEND OF NIGHT CITY', color:'#F5E642' });
   if (finSet.has('q202_nomads') || finSet.has('q202') || facts['q116_saul_dead'])
-    return { label:'THE STAR — WITH THE NOMADS', color:'#2DC78A' };
+      detected.push({ label:'THE STAR — WITH THE NOMADS', color:'#2DC78A' });
   if (finSet.has('q204_reborn') || finSet.has('q204'))
-    return { label:'TEMPERANCE — JOHNNY LIVES', color:'#FF6B9D' };
-  return null;
+      detected.push({ label:'TEMPERANCE — JOHNNY LIVES', color:'#FF6B9D' });
+  
+  return detected;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -221,19 +227,31 @@ function processSaveData(raw) {
         else if (/^ma_/.test(id)) cnt.gig++;
         else if (/^sts_/.test(id)) cnt.ncpd++;
     });
-    document.getElementById('qn-main').textContent = cnt.main;
-    document.getElementById('qn-side').textContent = cnt.side;
-    document.getElementById('qn-gig').textContent  = cnt.gig;
-    document.getElementById('qn-ncpd').textContent = cnt.ncpd;
+    const updateCard = (id, count) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = count;
+    };
 
-    // ── Ending ────────────────────────────────────────────────────────────────
-    const ending = detectEnding(facts, finSet);
-    if (ending) {
-        endingBadge.textContent = ending.label;
-        endingBadge.style.color = ending.color;
-        endingBadge.style.borderColor = ending.color;
-        endingBadge.style.boxShadow = `0 0 14px ${ending.color}30`;
-        endingBadge.style.display = 'block';
+    updateCard('qn-main', cnt.main);
+    updateCard('qn-side', cnt.side);
+    updateCard('qn-gig',  cnt.gig);
+    updateCard('qn-ncpd', cnt.ncpd);
+
+    const endings = detectEnding(facts, finSet);
+    endingBadge.innerHTML = '';
+    if (endings.length > 0) {
+        endings.forEach(e => {
+            const div = document.createElement('div');
+            div.className = 'ending-entry';
+            div.style.borderColor = e.color;
+            div.style.boxShadow = `0 0 14px ${e.color}15`;
+            div.innerHTML = `
+                <span class="ql">NARRATIVE FINALE</span>
+                <span class="ending-name" style="color:${e.color}">${e.label}</span>
+            `;
+            endingBadge.appendChild(div);
+        });
+        endingBadge.style.display = 'flex';
     } else {
         endingBadge.style.display = 'none';
     }

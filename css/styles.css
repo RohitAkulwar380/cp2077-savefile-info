@@ -99,12 +99,18 @@ body::before {
 .dash-grid {
   display:grid;
   grid-template-columns:300px 1fr;
-  gap:20px;
-  align-items:start;
+  gap:24px;
+  align-items:stretch; /* Match heights */
+  margin-bottom: 24px;
 }
 
 /* ─── CARD BASE ───────────────────────────────────────────────────────────── */
-.card { background:var(--panel); border:1px solid var(--border); position:relative; margin-bottom:20px; }
+.card {
+    background:var(--panel); border:1px solid var(--border);
+    position:relative; margin-bottom:0; /* using gaps instead */
+    display: flex; flex-direction: column;
+    height: 100%;
+}
 .card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:var(--border2) }
 .card-head {
   font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:3px;
@@ -113,13 +119,18 @@ body::before {
   display:flex; align-items:center; gap:8px;
 }
 
-/* ─── LEFT COLUMN ─────────────────────────────────────────────────────────── */
-.left-col { display:flex; flex-direction:column; gap:20px }
+/* ─── LEFT/RIGHT COLUMNS ─────────────────────────────────────────────────── */
+.left-col, .right-col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 
 /* portrait */
 .portrait-wrap {
-  height:260px; overflow:hidden; position:relative;
+  flex-grow: 1; overflow:hidden; position:relative;
   background:linear-gradient(160deg,#0a1322 0%,#06080d 100%);
+  min-height: 260px;
 }
 .portrait-img {
   width:100%; height:100%; object-fit:cover; object-position:center top;
@@ -134,17 +145,41 @@ body::before {
   color:var(--dim); letter-spacing:2px;
 }
 
-/* ending badge — below portrait inside card */
+/* ending cards list */
 .ending-badge {
   display:none;
-  font-family:'Orbitron',sans-serif; font-size:10px; font-weight:700;
-  letter-spacing:2px; padding:5px 14px;
-  border:1px solid; text-transform:uppercase;
-  margin:14px 18px 0;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 20px;
+}
+.ending-entry {
+  background: rgba(255, 255, 255, .02);
+  border: 1px solid var(--border2);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: .2s;
+}
+.ending-entry:hover {
+  background: rgba(255, 255, 255, .04);
+}
+.ending-entry .ql {
+  font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--text); letter-spacing:2px;
+}
+.ending-name {
+  font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
 }
 
 /* stats */
-.card-body { padding:14px 18px 4px }
+.card-body { padding:14px 18px 18px }
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 30px;
+    margin-bottom: 20px;
+}
 .stat-row {
   display:flex; justify-content:space-between; align-items:center;
   font-family:'Share Tech Mono',monospace; font-size:11px;
@@ -157,17 +192,40 @@ body::before {
 .lp-nomad  { color:var(--green) }
 .lp-street { color:var(--yellow) }
 
-/* quest strip */
-.quest-strip {
-  display:grid; grid-template-columns:repeat(4,1fr);
-  border-top:1px solid var(--border); margin-top:6px;
+/* quest cards (2x2 grid) */
+.quest-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
 }
-.qblock { padding:10px 0; text-align:center; border-right:1px solid var(--border) }
-.qblock:last-child { border-right:none }
-.qn { font-family:'Orbitron',sans-serif; font-size:15px; font-weight:700; color:var(--cyan); display:block }
-.ql { font-family:'Share Tech Mono',monospace; font-size:8px; color:var(--text); letter-spacing:1px; display:block; margin-top:2px }
+.quest-mini-card {
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: .2s;
+    position: relative;
+}
+.quest-mini-card:hover {
+    background: rgba(255, 255, 255, .05);
+    border-color: var(--cyan);
+}
+.quest-mini-card .ql {
+    font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--text); letter-spacing:1px;
+    margin-bottom: 6px; text-transform: uppercase;
+}
+.quest-mini-card .qn {
+    font-family:'Orbitron',sans-serif; font-size:22px; font-weight:700; color:var(--cyan);
+    line-height: 1;
+}
 
 /* ─── RIGHT COLUMN: CHRONICLE ─────────────────────────────────────────────── */
+.chronicle-card {
+    margin-top: 24px;
+}
 .chronicle-head {
   display:flex; align-items:center; justify-content:space-between;
   padding:14px 18px 12px; border-bottom:1px solid var(--border);
