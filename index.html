@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night City Chronicle — Save File Analyzer</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="logo-eyebrow">// SAVE FILE ANALYZER v2.0</div>
+      <div class="logo-title">NIGHT CITY<br>CHRONICLE</div>
+      <div class="logo-sub">CYBERPUNK 2077 · NARRATIVE STATE EXTRACTOR</div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-line"><span class="dot"></span> PARSER ONLINE</div>
+      <div class="meta-line" id="clock">--:--:--</div>
+    </div>
+  </div>
+
+  <!-- UPLOAD -->
+  <div class="upload-zone" id="upload-zone">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    <input type="file" id="file-input" accept=".json" style="display:none">
+    <div class="upload-label">▲ DROP metadata_*.json FILE HERE ▲</div>
+    <div class="upload-sub">Initialize parser to extract narrative state</div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+    <div class="dash-grid">
+
+      <!-- LEFT: portrait + stats -->
+      <div class="left-col">
+
+        <div class="card">
+          <div class="portrait-wrap" id="portrait-wrap">
+            <div class="portrait-placeholder" id="portrait-placeholder">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" opacity=".15">
+                <circle cx="26" cy="18" r="10" stroke="#C0D0E0" stroke-width="1.5"/>
+                <path d="M6 48c0-11.046 8.954-20 20-20s20 8.954 20 20" stroke="#C0D0E0" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span>NO PORTRAIT FILE</span>
+            </div>
+            <img id="portrait-img" src="" alt="V" class="portrait-img">
+          </div>
+          <div id="ending-badge" class="ending-badge"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="1" y="1" width="8" height="8" stroke="currentColor" stroke-width="1"/><rect x="3" y="3" width="4" height="4" fill="currentColor" opacity=".4"/></svg>
+            V's Profile
+          </div>
+          <div class="card-body">
+            <div class="stat-row"><span class="stat-label">LIFEPATH</span>    <span class="stat-val" id="ui-lifepath">—</span></div>
+            <div class="stat-row"><span class="stat-label">PLAYTIME</span>    <span class="stat-val" id="ui-playtime">—</span></div>
+            <div class="stat-row"><span class="stat-label">LEVEL</span>       <span class="stat-val" id="ui-level">—</span></div>
+            <div class="stat-row"><span class="stat-label">STREET CRED</span><span class="stat-val" id="ui-streetcred">—</span></div>
+            <div class="stat-row"><span class="stat-label">DIFFICULTY</span> <span class="stat-val" id="ui-difficulty">—</span></div>
+            <div class="stat-row"><span class="stat-label">PATCH</span>       <span class="stat-val" id="ui-patch">—</span></div>
+          </div>
+          <div class="quest-strip">
+            <div class="qblock"><span class="qn" id="qn-main">—</span><span class="ql">MAIN</span></div>
+            <div class="qblock"><span class="qn" id="qn-side">—</span><span class="ql">SIDE</span></div>
+            <div class="qblock"><span class="qn" id="qn-gig">—</span><span class="ql">GIGS</span></div>
+            <div class="qblock"><span class="qn" id="qn-ncpd">—</span><span class="ql">NCPD</span></div>
+          </div>
+        </div>
+
+      </div><!-- /left-col -->
+
+      <!-- RIGHT: narrative chronicle -->
+      <div class="card">
+        <div class="chronicle-head">
+          <div class="chronicle-title">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 2h8M1 5h6M1 8h7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Narrative Chronicle
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <div class="filters" id="filters">
+              <button class="filter-pill active" data-tag="all">ALL</button>
+              <button class="filter-pill" data-tag="lifepath">Lifepath</button>
+              <button class="filter-pill" data-tag="romance">Romances</button>
+              <button class="filter-pill" data-tag="death">Deaths</button>
+              <button class="filter-pill" data-tag="choice">Choices</button>
+              <button class="filter-pill" data-tag="ep1">Phantom Liberty</button>
+              <button class="filter-pill" data-tag="side">Side Quests</button>
+            </div>
+            <span class="fact-count" id="fact-count"></span>
+          </div>
+        </div>
+        <ul class="fact-list" id="ui-story-facts">
+          <li class="empty-state">AWAITING SAVE FILE</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div><!-- /dashboard -->
+
+</div><!-- /app -->
+
+<script src="js/parser.js"></script>
+
+<script>
+// Global clock
+const clockEl = document.getElementById('clock');
+setInterval(() => { clockEl.textContent = new Date().toLocaleTimeString('en-GB') }, 1000);
+</script>
+
+</body>
+</html>
